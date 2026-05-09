@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Acceso - Condominio</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .stats { background: #3498db; color: white; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 20px; }
+        form { background: #ecf0f1; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        input, select { width: 100%; padding: 8px; margin: 5px 0 15px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #27ae60; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background: #219a52; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #34495e; color: white; }
+        tr:hover { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Control de Acceso - Condominio 2026</h1>
+        <div class="stats">
+            <h2>Visitas de Hoy: {{ total_hoy }}</h2>
+        </div>
+
+        <h3>Registrar Nueva Visita</h3>
+        <form action="/registrar" method="POST">
+            <label>RUT:</label>
+            <input type="text" name="rut" required placeholder="12.345.678-9">
+            
+            <label>Nombre Completo:</label>
+            <input type="text" name="nombre" required>
+            
+            <label>Tipo de Visita:</label>
+            <select name="tipo_visita" required>
+                <option value="">Seleccionar</option>
+                <option value="Visita">Visita</option>
+                <option value="Proveedor">Proveedor</option>
+                <option value="Servicio">Servicio</option>
+                <option value="Delivery">Delivery</option>
+            </select>
+            
+            <label>Patente / Vehículo:</label>
+            <input type="text" name="patente" placeholder="AB1234">
+            
+            <label>Casa / Depto Destino:</label>
+            <input type="text" name="direccion" placeholder="Casa 15 o Depto 302">
+            
+            <label>Modelo Vehículo:</label>
+            <input type="text" name="vehiculo" placeholder="Toyota Yaris Blanco">
+            
+            <label>N° Personas:</label>
+            <input type="number" name="personas" value="1" min="1">
+            
+            <button type="submit">Registrar Entrada</button>
+        </form>
+
+        <h3>Últimas 50 Visitas</h3>
+        <table>
+            <tr>
+                <th>Hora</th><th>RUT</th><th>Nombre</th><th>Tipo</th><th>Patente</th><th>Destino</th>
+            </tr>
+            {% for v in visitas %}
+            <tr>
+                <td>{{ v.hora }}</td>
+                <td>{{ v.rut }}</td>
+                <td>{{ v.nombre }}</td>
+                <td>{{ v.tipo_visita }}</td>
+                <td>{{ v.patente }}</td>
+                <td>{{ v.direccion }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
